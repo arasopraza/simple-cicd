@@ -3,7 +3,7 @@ name: Continuous Integration
 on: 
   pull_request:
     branches:
-      - 206-hapi-test-example
+      - master
  
 jobs:
   test:
