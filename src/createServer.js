@@ -4,7 +4,7 @@ require('dotenv').config();
 const createServer = async () => {
     const server = Hapi.server({
         port: process.env.PORT,
-        host: process.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost',
+        host: process.env.NODE_ENV !== 'production' ? 'localhost' : '0.0.0.0'
     });
 
     server.route([
