@@ -8,6 +8,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ['20.x']
  
     steps:
     - name: SSH and deploy app
@@ -17,11 +21,13 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
-        script: |
-          cd ~/simple-cicd
-          git pull origin master
-          
-          export PATH=$PATH:/usr/local/bin
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
 
-          npm install
-          npm run start
+    - name: npm install and run
+      run: |
+        npm install
+        npm run start
