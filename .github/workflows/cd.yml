@@ -20,5 +20,8 @@ jobs:
         script: |
           cd ~/simple-cicd
           git pull origin master
+          
+          export PATH=$PATH:/usr/local/bin
+
           npm install
           npm run start
