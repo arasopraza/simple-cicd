@@ -23,6 +23,14 @@ const createServer = async () => {
                 return { value: `Hello ${name}` };
             },
         },
+        {
+            method: 'GET',
+            path: '/hi/{name}',
+            handler: (request) => {
+                const { name } = request.params;
+                return { value: `Hello ${name}` };
+            },
+        },
     ]);
 
     return server;
