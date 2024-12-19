@@ -1,35 +1,35 @@
-const createServer = require('./createServer');
+const createServer = require("./createServer");
 
 describe('Hapi Server', () => {
-  it('should response 200 with payload value "Hello World" when GET /hello', async () => {
-    // Arrange
-    const server = createServer();
+    let server;
 
-    // Action
-    const response = await server.inject({
-      method: 'GET',
-      url: '/hello',
+    beforeAll(async () => {
+        server = await createServer();
     });
 
-    // Assert
-    const responseJson = JSON.parse(response.payload);
-    expect(response.statusCode).toEqual(200);
-    expect(responseJson.value).toEqual('Hello World');
-  });
+    it('should respond with 200 and payload value "Hello World" when GET /hello', async () => {
+        // Action
+        const response = await server.inject({
+            method: 'GET',
+            url: '/hello',
+        });
 
-  it('should response 200 with payload value "Hello john" when GET /hello/john', async () => {
-    // Arrange
-    const server = createServer();
-
-    // Action
-    const response = await server.inject({
-      method: 'GET',
-      url: '/hello/john',
+        // Assert
+        const responseJson = JSON.parse(response.payload);
+        expect(response.statusCode).toBe(200);
+        expect(responseJson.value).toBe('Hello World');
     });
 
-    // Assert
-    const responseJson = JSON.parse(response.payload);
-    expect(response.statusCode).toEqual(200);
-    expect(responseJson.value).toEqual('Hello john');
-  });
+    it('should respond with 200 and payload value "Hello john" when GET /hello/john', async () => {
+        // Action
+        const response = await server.inject({
+            method: 'GET',
+            url: '/hello/john',
+        });
+
+        // Assert
+        const responseJson = JSON.parse(response.payload);
+        expect(response.statusCode).toBe(200);
+        expect(responseJson.value).toBe('Hello john');
+    });
 });

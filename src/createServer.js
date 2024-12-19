@@ -1,40 +1,39 @@
 const Hapi = require('@hapi/hapi');
-require('dotenv').config()
+require('dotenv').config();
 
 const createServer = async () => {
-  const server = Hapi.server({
-    host: process.env.NODE_ENV !== 'production' ? 'localhost' : '0.0.0.0',
-    port: process.env.PORT,
-  });
+    const server = Hapi.server({
+        port: process.env.PORT,
+        host: process.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost',
+    });
 
-  server.route([
-    {
-      method: 'GET',
-      path: '/hello',
-      handler: () => {
-        return { value: 'Hello Duniaaaa TEst' };
-      },
-    },
-    {
-      method: 'GET',
-      path: '/hello/{name}',
-      handler: (request) => {
-        const { name } = request.params;
-        return { value: `Hello ${name}`};
-      },
-    },
-  ]);
+    server.route([
+        {
+            method: 'GET',
+            path: '/hello',
+            handler: () => {
+                return { value: 'Hello World' };
+            },
+        },
+        {
+            method: 'GET',
+            path: '/hello/{name}',
+            handler: (request) => {
+                const { name } = request.params;
+                return { value: `Hello ${name}` };
+            },
+        },
+    ]);
 
-  // Start the server
-  await server.start();
-  console.log(`Server started at ${server.info.uri}`);
-
-  return server;
+    return server;
 };
 
-createServer().catch((err) => {
-  console.error('Error starting server:', err);
-  process.exit(1);
-});
+if (require.main === module) {
+  (async () => {
+      const server = await createServer();
+      await server.start();
+      console.log('Server running on %s', server.info.uri);
+  })();
+}
 
 module.exports = createServer;
