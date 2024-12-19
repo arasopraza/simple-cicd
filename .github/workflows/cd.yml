@@ -29,5 +29,6 @@ jobs:
 
     - name: npm install and run
       run: |
+        cd ~/simple-cicd
         npm install
         npm run start
