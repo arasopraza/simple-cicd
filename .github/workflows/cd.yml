@@ -8,10 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: ['20.x']
  
     steps:
     - name: SSH and deploy app
@@ -21,14 +17,16 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
-      
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
+        script: |
+          cd ~/simple-cicd
+          git pull origin master
 
-    - name: npm install and run
-      run: |
-        cd ~/simple-cicd
-        npm install
-        npm run start
+          export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Load nvm
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # Load nvm bash_completion
+
+            # Use the desired Node.js version
+            nvm use 18
+            
+          npm install
+          npm run start
