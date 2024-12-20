@@ -12,7 +12,7 @@ const createServer = async () => {
             method: 'GET',
             path: '/hello',
             handler: () => {
-                return { value: 'Hello World' };
+                return { value: 'Hello DevCoach' };
             },
         },
         {
