@@ -17,7 +17,7 @@ describe('Hapi Server', () => {
         // Assert
         const responseJson = JSON.parse(response.payload);
         expect(response.statusCode).toBe(200);
-        expect(responseJson.value).toBe('Hello World');
+        expect(responseJson.value).toBe('Hello DevCoach');
     });
 
     it('should respond with 200 and payload value "Hello john" when GET /hello/john', async () => {
